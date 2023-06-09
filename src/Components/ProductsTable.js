@@ -38,8 +38,16 @@ function ProductsTable() {
 
     return (
         <div className="App">
-            <Table dataSource={data?.products?.products} columns={columns} pagination={false} />
-            <TableFooter totalResults={data?.products?.total} pageCount={pageCount} data={data}></TableFooter>
+            {data?.loading === true ? <h1>Loading...</h1> :
+                <>
+                    <Table dataSource={data?.products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
+                        return {
+                            onClick: () => console.log(record)
+                        };
+                    }} />
+                    <TableFooter totalResults={data?.products?.total} pageCount={pageCount} data={data}></TableFooter>
+                </>
+            }
         </div>
     );
 }

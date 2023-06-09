@@ -6,10 +6,9 @@ function Paginator({ pageCount }) {
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(1);
 
-
     const changePage = (page) => {
         setCurrentPage(page)
-        dispatch(getProductsByPage(page));
+        dispatch(getProductsByPage(page === 1 ? 0 : (page - 1) * 10));
     }
 
     return (
