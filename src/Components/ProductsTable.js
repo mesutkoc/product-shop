@@ -1,13 +1,16 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../Redux/productSlice';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { getPageCount } from '../Helper';
 import TableFooter from './TableFooter';
+import AddNewProductModal from './AddNewProductModal';
+import './table.scss';
 
 function ProductsTable() {
     const dispatch = useDispatch();
     const data = useSelector((state) => state?.products);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     console.log(data);
 
     useEffect(() => {
@@ -36,17 +39,30 @@ function ProductsTable() {
         key: 'description',
     }]
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
     return (
         <div className="App">
             {data?.loading === true ? <h1>Loading...</h1> :
-                <>
-                    <Table dataSource={data?.products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
-                        return {
-                            onClick: () => console.log(record)
-                        };
-                    }} />
-                    <TableFooter totalResults={data?.products?.total} pageCount={pageCount} data={data}></TableFooter>
-                </>
+                <div className='dashboard'>
+                    <div className='addNewItem'>
+                        <Button type="primary" onClick={showModal}>
+                            Add New Product
+                        </Button>
+                    </div>
+                    <div className='dashboardTable'>
+                        <AddNewProductModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}></AddNewProductModal>
+                        <Table dataSource={data?.products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
+                            return {
+                                onClick: () => console.log(record)
+                            };
+                        }} />
+                        <TableFooter totalResults={data?.products?.total} pageCount={pageCount} data={data}></TableFooter>
+                    </div>
+
+                </div>
             }
         </div>
     );

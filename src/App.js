@@ -1,4 +1,5 @@
 import ProductsTable from './Components/ProductsTable';
+import './App.scss';
 
 function App() {
 
