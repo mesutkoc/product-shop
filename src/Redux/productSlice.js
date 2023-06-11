@@ -19,6 +19,10 @@ export const getProductsByPage = (productGap) => async (dispatch) => {
     dispatch(fetchProductsByPage(response));
 };
 
+export const selectCategoryIfExist = (category) => {
+    return category ? getProductsByCategory(category) : fetchProducts();
+}
+
 const initialState = {
     loading: false,
     firstPage: PROJECT_CONSTANTS.initialPage,
