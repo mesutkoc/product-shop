@@ -1,3 +1,4 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
 import ProductsTable from './Components/ProductsTable';
 import './App.scss';
 
@@ -5,7 +6,10 @@ function App() {
 
   return (
     <div className="App">
-      <ProductsTable></ProductsTable>
+      <Routes>
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path='/dashboard' element={<ProductsTable></ProductsTable>}></Route>
+      </Routes>
     </div>
   );
 }
