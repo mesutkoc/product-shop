@@ -1,4 +1,9 @@
 .App {
   text-align: center;
   margin-top: 10px;
+
+  .dashboard {
+    display: flex;
+    justify-content: center;
+  }
 }

@@ -10,7 +10,7 @@ import './table.scss';
 function ProductsTable() {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { loading, products } = useSelector((state) => state?.products);
+    const { products } = useSelector((state) => state?.products);
 
     const pageCount = useMemo(
         () => getPageCount(products?.total),
@@ -45,24 +45,22 @@ function ProductsTable() {
 
     return (
         <div className="productsTable">
-            {loading === true ? <h1>Loading...</h1> :
-                <div className='table'>
-                    <div className='addNewItem'>
-                        <Button type="primary" onClick={showModal}>
-                            Add New Product
-                        </Button>
-                    </div>
-                    <div className='dashboardTable'>
-                        <AddNewProductModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}></AddNewProductModal>
-                        <Table dataSource={products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
-                            return {
-                                onClick: () => navigateDetail(record)
-                            };
-                        }} />
-                        <TableFooter totalResults={products?.total} pageCount={pageCount} data={products?.products}></TableFooter>
-                    </div>
+            <div className='table'>
+                <div className='addNewItem'>
+                    <Button type="primary" onClick={showModal}>
+                        Add New Product
+                    </Button>
                 </div>
-            }
+                <div className='dashboardTable'>
+                    <AddNewProductModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}></AddNewProductModal>
+                    <Table dataSource={products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
+                        return {
+                            onClick: () => navigateDetail(record)
+                        };
+                    }} />
+                    <TableFooter totalResults={products?.total} pageCount={pageCount} data={products?.products}></TableFooter>
+                </div>
+            </div>
         </div>
     );
 }

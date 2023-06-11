@@ -1,9 +1,7 @@
 .dashboard {
     display: flex;
 
-    .verticalFilter {
-        background-color: red;
-    }
+    .verticalFilter {}
 
     .table {
 
@@ -45,6 +43,18 @@
                 }
             }
 
+        }
+    }
+
+    .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .content {
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
         }
     }
 }

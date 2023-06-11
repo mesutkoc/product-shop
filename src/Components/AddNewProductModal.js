@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Form, Input, Select, Space } from 'antd';
+import { Button, Modal, Form, Input, Select } from 'antd';
 import PROJECT_CONSTANTS from "../constants";
 import { useSelector } from "react-redux";
 

@@ -24,6 +24,7 @@ function VerticalFilter() {
     }
 
     return <div className="verticalFilter">
+        <h3>Categories</h3>
         <Menu
             selectedKeys={[current]}
             mode="inline"
