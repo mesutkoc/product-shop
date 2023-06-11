@@ -1,39 +1,53 @@
 .dashboard {
-    display: flex;
-
-    .verticalFilter {}
-
-    .table {
-
-        .addNewItem {
-            display: flex;
-            justify-content: end;
-            margin-bottom: 10px;
-            margin-right: 10px;
-        }
-    }
-
-    .resultFooter {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin: 5px 5px 0 15px;
-
-        :first-child {
-            color: #00205B;
-        }
-
-    }
-
     .loading {
         display: flex;
         justify-content: center;
         align-items: center;
 
         .content {
+            margin-top: 100px;
             padding: 50px;
             background: rgba(0, 0, 0, 0.05);
             border-radius: 4px;
         }
+    }
+
+    .productsTable {
+        .table {
+
+            .addNewItem {
+                display: flex;
+                justify-content: end;
+                margin: 10px;
+            }
+
+            .dashboardBottom {
+                display: flex;
+                justify-content: center;
+
+
+                .resultFooter {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    margin: 5px 5px 0 15px;
+
+                    :first-child {
+                        color: #00205B;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+.detailPage {
+    display: flex;
+
+    .image {
+        background: rgba(0, 0, 0, 0.5);
+        width: 350px;
+        height: 300px;
     }
 }

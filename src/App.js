@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { fetchProducts } from './Redux/productSlice';
 import { fetchCategory } from './Redux/categorySlice';
-import './App.scss';
 import Dashboard from './Components/Dashboard';
 import ProductDetail from './Components/ProductDetail';
+import Header from './Components/Header';
+import './App.scss';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header></Header>
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>

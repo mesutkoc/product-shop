@@ -39,8 +39,9 @@ export const selectCategoryIfExist = (category) => {
     return category ? getProductsByCategory(category) : fetchProducts();
 }
 
-export const productListItems = (data) => {
-    const localProducts = JSON.parse(localStorage.getItem('addedProducts'));
+export const productListItems = (data, category) => {
+    let localProducts = JSON.parse(localStorage.getItem('addedProducts'));
+    localProducts = category ? localProducts?.filter(product => product?.category === category) : localProducts
     const newData = data?.payload?.products.map(item => ({
         ...item,
         key: item.id
@@ -64,7 +65,8 @@ export const productSlice = createSlice({
             state.currentPage = data.payload
         },
         fetchProductsByCategory: (state, data) => {
-            const concatenatedArray = productListItems(data);
+            console.log(data);
+            const concatenatedArray = productListItems(data, data?.payload?.products?.[0]?.category);
             const payload = data.payload;
             state.products = { ...payload, products: concatenatedArray };
         },
