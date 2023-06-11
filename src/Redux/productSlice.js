@@ -4,13 +4,19 @@ import PROJECT_CONSTANTS from '../constants';
 
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', () => {
-    return axios.get(`${PROJECT_CONSTANTS.productAPI}?limit=0`).then((response) => response.data);
+    return axios.get(`${PROJECT_CONSTANTS.productAPI}?limit=10`).then((response) => response.data);
 })
 
 export const getProductsByCategory = (category) => async (dispatch) => {
     const response = await axios.get(`${PROJECT_CONSTANTS.productAPI}/category/${category?.label}`).then((response) => response.data);
 
     dispatch(fetchProductsByCategory(response));
+};
+
+export const getProductsByPage = (productGap) => async (dispatch) => {
+    const response = await axios.get(`${PROJECT_CONSTANTS.productAPI}?limit=10&skip=${productGap}`).then((response) => response.data);
+
+    dispatch(fetchProductsByPage(response));
 };
 
 const initialState = {
@@ -24,6 +30,14 @@ export const productSlice = createSlice({
     initialState,
     reducers: {
         fetchProductsByCategory: (state, data) => {
+            const newData = data?.payload?.products.map(item => ({
+                ...item,
+                key: item.id
+            }))
+            const payload = data.payload;
+            state.products = { ...payload, products: newData };
+        },
+        fetchProductsByPage: (state, data) => {
             const newData = data?.payload?.products.map(item => ({
                 ...item,
                 key: item.id
@@ -49,6 +63,6 @@ export const productSlice = createSlice({
     }
 });
 
-export const { fetchProductsByCategory } = productSlice.actions;
+export const { fetchProductsByCategory, fetchProductsByPage } = productSlice.actions;
 
 export default productSlice.reducer;
