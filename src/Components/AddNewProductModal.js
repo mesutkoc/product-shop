@@ -1,9 +1,12 @@
 import { Button, Modal, Form, Input, Select } from 'antd';
 import PROJECT_CONSTANTS from "../constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from '../Redux/productSlice';
 
 function AddNewProductModal({ setIsModalOpen, isModalOpen }) {
+    const dispatch = useDispatch();
     const { categories } = useSelector(state => state.categories)
+    const { products, addedProducts } = useSelector(state => state.products)
     const [form] = Form.useForm();
 
     const handleOk = () => {
@@ -13,8 +16,9 @@ function AddNewProductModal({ setIsModalOpen, isModalOpen }) {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
     const onFinish = (values) => {
-        console.log("Success:", values);
+        dispatch(addProduct(values, products))
         form.resetFields();
     };
 

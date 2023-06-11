@@ -25,6 +25,13 @@ export const getProductById = (id) => async (dispatch) => {
     dispatch(fetchProductById(response));
 };
 
+export const addProduct = (product, products) => async (dispatch) => {
+    const config = { headers: { 'Content-Type': 'application/json' } }
+    await axios.post(`${PROJECT_CONSTANTS.productAPI}/add`, {
+        ...product, id: products?.length + 1
+    }, config).then(res => dispatch(addNewProduct(res.data)));
+}
+
 export const updatePage = (page) => (dispatch) => {
     dispatch(setPage(page))
 }
@@ -37,7 +44,8 @@ const initialState = {
     loading: false,
     currentPage: PROJECT_CONSTANTS.initialPage,
     products: {},
-    product: {}
+    product: {},
+    addedProducts: []
 };
 
 export const productSlice = createSlice({
@@ -65,6 +73,10 @@ export const productSlice = createSlice({
         },
         fetchProductById: (state, data) => {
             state.product = data.payload
+        },
+        addNewProduct: (state, data) => {
+            state.addedProducts = [...state.addedProducts, data.payload]
+            localStorage.setItem("addedProducts", JSON.stringify(state.addedProducts));
         }
     },
     extraReducers: (builder) => {
@@ -84,6 +96,6 @@ export const productSlice = createSlice({
     }
 });
 
-export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById, setPage } = productSlice.actions;
+export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById, setPage, addNewProduct } = productSlice.actions;
 
 export default productSlice.reducer;
