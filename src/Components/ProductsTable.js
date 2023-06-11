@@ -1,21 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts } from '../Redux/productSlice';
+import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Table, Button } from 'antd';
 import { getPageCount } from '../Helper';
 import TableFooter from './TableFooter';
 import AddNewProductModal from './AddNewProductModal';
 import './table.scss';
 
-function ProductsTable() {
-    const dispatch = useDispatch();
-    const data = useSelector((state) => state?.products);
+function ProductsTable() {  
     const [isModalOpen, setIsModalOpen] = useState(false);
-    console.log(data);
-
-    useEffect(() => {
-        dispatch(fetchProducts())
-    }, [dispatch]);
+    const data = useSelector((state) => state?.products);
 
     const pageCount = useMemo(
         () => getPageCount(data?.products?.total),
