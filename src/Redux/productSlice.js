@@ -13,12 +13,6 @@ export const getProductsByCategory = (category) => async (dispatch) => {
     dispatch(fetchProductsByCategory(response));
 };
 
-export const getProductsByPage = (productGap) => async (dispatch) => {
-    const response = await axios.get(`${PROJECT_CONSTANTS.productAPI}?limit=10&skip=${productGap}`).then((response) => response.data);
-
-    dispatch(fetchProductsByPage(response));
-};
-
 export const getProductById = (id) => async (dispatch) => {
     const response = await axios.get(`${PROJECT_CONSTANTS.productAPI}/${id}`).then((response) => response.data);
 
@@ -45,6 +39,15 @@ export const selectCategoryIfExist = (category) => {
     return category ? getProductsByCategory(category) : fetchProducts();
 }
 
+export const productListItems = (data) => {
+    const localProducts = JSON.parse(localStorage.getItem('addedProducts'));
+    const newData = data?.payload?.products.map(item => ({
+        ...item,
+        key: item.id
+    }))
+    const concatenatedArray = newData?.length > 0 && localProducts?.length > 0 ? newData.concat(localProducts) : newData;
+    return concatenatedArray
+}
 const initialState = {
     loading: false,
     currentPage: PROJECT_CONSTANTS.initialPage,
@@ -61,21 +64,11 @@ export const productSlice = createSlice({
             state.currentPage = data.payload
         },
         fetchProductsByCategory: (state, data) => {
-            const newData = data?.payload?.products.map(item => ({
-                ...item,
-                key: item.id
-            }))
+            const concatenatedArray = productListItems(data);
             const payload = data.payload;
-            state.products = { ...payload, products: newData };
+            state.products = { ...payload, products: concatenatedArray };
         },
-        fetchProductsByPage: (state, data) => {
-            const newData = data?.payload?.products.map(item => ({
-                ...item,
-                key: item.id
-            }))
-            const payload = data.payload;
-            state.products = { ...payload, products: newData };
-        },
+
         fetchProductById: (state, data) => {
             state.product = data.payload
         },
@@ -86,6 +79,7 @@ export const productSlice = createSlice({
         },
         deleteExistProduct: (state, data) => {
             const new_products = state.products?.products?.filter(product => product?.id !== data?.payload?.id)
+            localStorage.removeItem('addedProducts');
             state.products = { ...state.products, products: new_products };
         }
     },
@@ -95,21 +89,16 @@ export const productSlice = createSlice({
         })
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
             state.loading = false;
-            const localProducts = JSON.parse(localStorage.getItem('addedProducts'));
-            const newData = action?.payload?.products.map(item => ({
-                ...item,
-                key: item.id
-            }))
+            const concatenatedArray = productListItems(action);
             const payload = action.payload;
-            const concatenatedArray = newData?.length > 0 && localProducts?.length > 0 ? newData.concat(localProducts) : newData;
             state.products = {
-                ...payload, products: [...concatenatedArray]
+                ...payload, products: concatenatedArray
             };
             state.error = '';
         })
     }
 });
 
-export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById, setPage, addNewProduct, deleteExistProduct } = productSlice.actions;
+export const { fetchProductsByCategory, fetchProductById, setPage, addNewProduct, deleteExistProduct } = productSlice.actions;
 
 export default productSlice.reducer;

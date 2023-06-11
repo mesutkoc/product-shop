@@ -4,9 +4,9 @@ import { Table, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import TableFooter from './TableFooter';
 import AddNewProductModal from './AddNewProductModal';
+import { deleteExistProduct, deleteProduct } from '../Redux/productSlice';
 import { getPageCount } from '../Helper';
 import './table.scss';
-import { deleteProduct } from '../Redux/productSlice';
 
 function ProductsTable() {
     const navigate = useNavigate();
@@ -20,8 +20,7 @@ function ProductsTable() {
     );
 
     const deleteProductClick = (record) => {
-        console.log(record);
-        dispatch(deleteProduct(record))
+        record?.id !== 101 ? dispatch(deleteProduct(record)) : dispatch(deleteExistProduct(record))
     }
     const columns = [{
         title: 'Brand',
