@@ -1,19 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Table, Button } from 'antd';
-import { getPageCount } from '../Helper';
 import TableFooter from './TableFooter';
 import AddNewProductModal from './AddNewProductModal';
 import './table.scss';
 
-function ProductsTable() {  
+function ProductsTable() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const data = useSelector((state) => state?.products);
-
-    const pageCount = useMemo(
-        () => getPageCount(data?.products?.total),
-        [data?.products?.total]
-    );
+    const { loading, products } = useSelector((state) => state?.products);
 
     const columns = [{
         title: 'Brand',
@@ -38,7 +32,7 @@ function ProductsTable() {
 
     return (
         <div className="productsTable">
-            {data?.loading === true ? <h1>Loading...</h1> :
+            {loading === true ? <h1>Loading...</h1> :
                 <div className='table'>
                     <div className='addNewItem'>
                         <Button type="primary" onClick={showModal}>
@@ -47,14 +41,13 @@ function ProductsTable() {
                     </div>
                     <div className='dashboardTable'>
                         <AddNewProductModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}></AddNewProductModal>
-                        <Table dataSource={data?.products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
+                        <Table dataSource={products?.products} columns={columns} onRow={(record, rowIndex) => {
                             return {
                                 onClick: () => console.log(record)
                             };
                         }} />
-                        <TableFooter totalResults={data?.products?.total} pageCount={pageCount} data={data}></TableFooter>
+                        <TableFooter totalResults={products?.total}></TableFooter>
                     </div>
-
                 </div>
             }
         </div>

@@ -15,8 +15,6 @@
         }
     }
 
-
-
     .resultFooter {
         display: flex;
         flex-direction: row;
@@ -25,28 +23,6 @@
 
         :first-child {
             color: #00205B;
-        }
-
-        .paginator {
-
-            .paginatorItem {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 30px;
-                height: 30px;
-                background-color: #00205B;
-                margin-left: 4px;
-                color: white;
-                cursor: pointer;
-
-                &.active {
-                    border: 1px solid #00205B;
-                    background-color: white;
-                    color: #00205B;
-                }
-            }
-
         }
 
     }
