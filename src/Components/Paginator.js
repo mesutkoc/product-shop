@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { getProductsByPage } from "../Redux/productSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductsByPage, updatePage } from "../Redux/productSlice";
 
 function Paginator({ pageCount }) {
     const dispatch = useDispatch();
-    const [currentPage, setCurrentPage] = useState(1);
+    const { currentPage } = useSelector((state) => state?.products);
 
     const changePage = (page) => {
-        setCurrentPage(page)
+        dispatch(updatePage(page))
         dispatch(getProductsByPage(page === 1 ? 0 : (page - 1) * 10));
     }
 

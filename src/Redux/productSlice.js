@@ -25,13 +25,17 @@ export const getProductById = (id) => async (dispatch) => {
     dispatch(fetchProductById(response));
 };
 
+export const updatePage = (page) => (dispatch) => {
+    dispatch(setPage(page))
+}
+
 export const selectCategoryIfExist = (category) => {
     return category ? getProductsByCategory(category) : fetchProducts();
 }
 
 const initialState = {
     loading: false,
-    firstPage: PROJECT_CONSTANTS.initialPage,
+    currentPage: PROJECT_CONSTANTS.initialPage,
     products: {},
     product: {}
 };
@@ -40,6 +44,9 @@ export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
+        setPage: (state, data) => {
+            state.currentPage = data.payload
+        },
         fetchProductsByCategory: (state, data) => {
             const newData = data?.payload?.products.map(item => ({
                 ...item,
@@ -77,6 +84,6 @@ export const productSlice = createSlice({
     }
 });
 
-export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById } = productSlice.actions;
+export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById, setPage } = productSlice.actions;
 
 export default productSlice.reducer;
