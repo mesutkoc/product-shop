@@ -5,6 +5,7 @@ import { fetchProducts } from './Redux/productSlice';
 import { fetchCategory } from './Redux/categorySlice';
 import './App.scss';
 import Dashboard from './Components/Dashboard';
+import ProductDetail from './Components/ProductDetail';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
+        <Route path={`/productdetail/:i`} element={<ProductDetail />}></Route>
       </Routes>
     </div>
   );

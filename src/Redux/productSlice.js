@@ -19,6 +19,12 @@ export const getProductsByPage = (productGap) => async (dispatch) => {
     dispatch(fetchProductsByPage(response));
 };
 
+export const getProductById = (id) => async (dispatch) => {
+    const response = await axios.get(`${PROJECT_CONSTANTS.productAPI}/${id}`).then((response) => response.data);
+
+    dispatch(fetchProductById(response));
+};
+
 export const selectCategoryIfExist = (category) => {
     return category ? getProductsByCategory(category) : fetchProducts();
 }
@@ -26,7 +32,8 @@ export const selectCategoryIfExist = (category) => {
 const initialState = {
     loading: false,
     firstPage: PROJECT_CONSTANTS.initialPage,
-    products: {}
+    products: {},
+    product: {}
 };
 
 export const productSlice = createSlice({
@@ -49,6 +56,9 @@ export const productSlice = createSlice({
             const payload = data.payload;
             state.products = { ...payload, products: newData };
         },
+        fetchProductById: (state, data) => {
+            state.product = data.payload
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.pending, (state) => {
@@ -67,6 +77,6 @@ export const productSlice = createSlice({
     }
 });
 
-export const { fetchProductsByCategory, fetchProductsByPage } = productSlice.actions;
+export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById } = productSlice.actions;
 
 export default productSlice.reducer;

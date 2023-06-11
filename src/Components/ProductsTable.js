@@ -1,12 +1,14 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Table, Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import TableFooter from './TableFooter';
 import AddNewProductModal from './AddNewProductModal';
 import { getPageCount } from '../Helper';
 import './table.scss';
 
 function ProductsTable() {
+    const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { loading, products } = useSelector((state) => state?.products);
 
@@ -36,6 +38,11 @@ function ProductsTable() {
         setIsModalOpen(true);
     };
 
+    const navigateDetail = (record) => {
+        console.log(record);
+        navigate(`/productdetail/${record?.id}`)
+    }
+
     return (
         <div className="productsTable">
             {loading === true ? <h1>Loading...</h1> :
@@ -49,7 +56,7 @@ function ProductsTable() {
                         <AddNewProductModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}></AddNewProductModal>
                         <Table dataSource={products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
                             return {
-                                onClick: () => console.log(record)
+                                onClick: () => navigateDetail(record)
                             };
                         }} />
                         <TableFooter totalResults={products?.total} pageCount={pageCount} data={products?.products}></TableFooter>
