@@ -32,6 +32,11 @@ export const addProduct = (product, products) => async (dispatch) => {
     }, config).then(res => dispatch(addNewProduct(res.data)));
 }
 
+export const deleteProduct = (record) => async (dispatch) => {
+    const config = { headers: { 'Content-Type': 'application/json' } }
+    await axios.delete(`${PROJECT_CONSTANTS.productAPI}/${record?.id}`, config).then(res => dispatch(deleteExistProduct(res.data)));
+}
+
 export const updatePage = (page) => (dispatch) => {
     dispatch(setPage(page))
 }
@@ -77,6 +82,11 @@ export const productSlice = createSlice({
         addNewProduct: (state, data) => {
             state.addedProducts = [...state.addedProducts, data.payload]
             localStorage.setItem("addedProducts", JSON.stringify(state.addedProducts));
+            state.products = { ...state.products, products: [...state.products.products, ...state.addedProducts] }
+        },
+        deleteExistProduct: (state, data) => {
+            const new_products = state.products?.products?.filter(product => product?.id !== data?.payload?.id)
+            state.products = { ...state.products, products: new_products };
         }
     },
     extraReducers: (builder) => {
@@ -85,17 +95,21 @@ export const productSlice = createSlice({
         })
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
             state.loading = false;
+            const localProducts = JSON.parse(localStorage.getItem('addedProducts'));
             const newData = action?.payload?.products.map(item => ({
                 ...item,
                 key: item.id
             }))
             const payload = action.payload;
-            state.products = { ...payload, products: newData };
+            const concatenatedArray = newData?.length > 0 && localProducts?.length > 0 ? newData.concat(localProducts) : newData;
+            state.products = {
+                ...payload, products: [...concatenatedArray]
+            };
             state.error = '';
         })
     }
 });
 
-export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById, setPage, addNewProduct } = productSlice.actions;
+export const { fetchProductsByCategory, fetchProductsByPage, fetchProductById, setPage, addNewProduct, deleteExistProduct } = productSlice.actions;
 
 export default productSlice.reducer;

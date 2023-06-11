@@ -6,7 +6,7 @@ import { addProduct } from '../Redux/productSlice';
 function AddNewProductModal({ setIsModalOpen, isModalOpen }) {
     const dispatch = useDispatch();
     const { categories } = useSelector(state => state.categories)
-    const { products, addedProducts } = useSelector(state => state.products)
+    const { products } = useSelector(state => state.products)
     const [form] = Form.useForm();
 
     const handleOk = () => {
