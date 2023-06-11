@@ -2,11 +2,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Menu } from 'antd';
 import { setCategory } from "../Redux/categorySlice";
 import { selectCategoryIfExist } from "../Redux/productSlice";
+import { productLimitForPage } from '../Helper';
 
 function VerticalFilter() {
     const dispatch = useDispatch();
 
     const { categories, selectedCategory } = useSelector((state) => state?.categories);
+    const { currentPage } = useSelector((state) => state?.products);
 
     const onClick = (e) => {
         const category = categories.find(item => item?.key === parseInt(e?.key));
@@ -16,7 +18,7 @@ function VerticalFilter() {
 
     const onDeselect = () => {
         dispatch(setCategory(''));
-        dispatch(selectCategoryIfExist(''))
+        dispatch(selectCategoryIfExist('', productLimitForPage(currentPage)))
     }
 
     return <div className="verticalFilter">

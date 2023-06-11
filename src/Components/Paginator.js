@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { productLimitForPage } from '../Helper';
 import { getProductsByPage, updatePage } from "../Redux/productSlice";
 
 function Paginator({ pageCount }) {
@@ -6,8 +7,9 @@ function Paginator({ pageCount }) {
     const { currentPage } = useSelector((state) => state?.products);
 
     const changePage = (page) => {
+        const pages = productLimitForPage(page);
         dispatch(updatePage(page))
-        dispatch(getProductsByPage(page === 1 ? 0 : (page - 1) * 10));
+        dispatch(getProductsByPage(pages));
     }
 
     return (

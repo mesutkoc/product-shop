@@ -29,8 +29,8 @@ export const updatePage = (page) => (dispatch) => {
     dispatch(setPage(page))
 }
 
-export const selectCategoryIfExist = (category) => {
-    return category ? getProductsByCategory(category) : fetchProducts();
+export const selectCategoryIfExist = (category, currentPage) => {
+    return category ? getProductsByCategory(category) : getProductsByPage(currentPage);
 }
 
 const initialState = {
