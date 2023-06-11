@@ -44,9 +44,9 @@ function ProductsTable() {
     };
 
     return (
-        <div className="App">
+        <div className="productsTable">
             {data?.loading === true ? <h1>Loading...</h1> :
-                <div className='dashboard'>
+                <div className='table'>
                     <div className='addNewItem'>
                         <Button type="primary" onClick={showModal}>
                             Add New Product

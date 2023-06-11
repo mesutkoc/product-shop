@@ -1,45 +1,53 @@
 .dashboard {
-
-    .addNewItem {
-        display: flex;
-        justify-content: end;
-        margin-bottom: 10px;
-        margin-right: 10px;
-    }
-}
-
-
-
-.resultFooter {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 5px 5px 0 15px;
 
-    :first-child {
-        color: #00205B;
+    .verticalFilter {
+        background-color: red;
     }
 
-    .paginator {
+    .table {
 
-        .paginatorItem {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            background-color: #00205B;
-            margin-left: 4px;
-            color: white;
-            cursor: pointer;
+        .addNewItem {
+            display: flex;
+            justify-content: end;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+    }
 
-            &.active {
-                border: 1px solid #00205B;
-                background-color: white;
-                color: #00205B;
+
+
+    .resultFooter {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 5px 5px 0 15px;
+
+        :first-child {
+            color: #00205B;
+        }
+
+        .paginator {
+
+            .paginatorItem {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 30px;
+                height: 30px;
+                background-color: #00205B;
+                margin-left: 4px;
+                color: white;
+                cursor: pointer;
+
+                &.active {
+                    border: 1px solid #00205B;
+                    background-color: white;
+                    color: #00205B;
+                }
             }
+
         }
 
     }
-
 }

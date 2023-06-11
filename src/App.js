@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import ProductsTable from './Components/ProductsTable';
+
 import './App.scss';
+import Dashboard from './Components/Dashboard';
 
 function App() {
 
@@ -8,7 +9,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
-        <Route path='/dashboard' element={<ProductsTable></ProductsTable>}></Route>
+        <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
       </Routes>
     </div>
   );
