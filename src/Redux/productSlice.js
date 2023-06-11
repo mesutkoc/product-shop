@@ -4,7 +4,7 @@ import PROJECT_CONSTANTS from '../constants';
 
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', () => {
-    return axios.get(`${PROJECT_CONSTANTS.productAPI}?limit=10`).then((response) => response.data);
+    return axios.get(`${PROJECT_CONSTANTS.productAPI}?limit=0`).then((response) => response.data);
 })
 
 export const getProductsByCategory = (category) => async (dispatch) => {
@@ -36,8 +36,8 @@ export const updatePage = (page) => (dispatch) => {
     dispatch(setPage(page))
 }
 
-export const selectCategoryIfExist = (category, currentPage) => {
-    return category ? getProductsByCategory(category) : getProductsByPage(currentPage);
+export const selectCategoryIfExist = (category) => {
+    return category ? getProductsByCategory(category) : fetchProducts();
 }
 
 const initialState = {

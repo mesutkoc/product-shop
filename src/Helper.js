@@ -9,7 +9,4 @@ const getPageCount = (totalResults) => {
     return pageNumber;
 }
 
-const productLimitForPage = (currentPage) => { return currentPage === 1 ? 0 : (currentPage - 1) * 10 }
-
-
-export { getPageCount, productLimitForPage }
+export { getPageCount }

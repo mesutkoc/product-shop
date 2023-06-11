@@ -53,7 +53,7 @@ function ProductsTable() {
                 </div>
                 <div className='dashboardTable'>
                     <AddNewProductModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}></AddNewProductModal>
-                    <Table dataSource={products?.products} columns={columns} pagination={false} onRow={(record, rowIndex) => {
+                    <Table dataSource={products?.products} columns={columns} onRow={(record, rowIndex) => {
                         return {
                             onClick: () => navigateDetail(record)
                         };
