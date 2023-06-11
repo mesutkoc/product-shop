@@ -29,7 +29,8 @@ export const categorySlice = createSlice({
             state.loading = false;
             const newData = action?.payload?.map((item, index) => ({
                 label: item,
-                key: index + 1
+                key: index + 1,
+                value: item
             }))
             state.categories = newData;
             state.error = '';
